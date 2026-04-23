@@ -18,3 +18,10 @@ fi
 export PYTHONDONTWRITEBYTECODE=1
 
 uv run fastapi dev main.py
+
+#--
+# The issue is that 'fcntl' is not available on windows
+#--
+# gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:8000 --workers 1
+
+# python -m uvicorn main:app --reload --host=0.0.0.0 --port=8000 --workers 2

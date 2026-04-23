@@ -4,10 +4,42 @@
 FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python.
 This is a repository that provides to deliver the records to the Prometheus-Export application.
 
+UV is an extremely fast Python package and project manager, written in Rust. UV manages project dependencies and environments, with support for lockfiles, workspaces, and more.
+- A single tool to replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more
+- 10-100x faster than pip.
+- Installs and manages Python versions.
 
 
 ### Using Uv: Create the virtual environment in the same directory as the project and install the dependencies:
 - uv installation : https://www.0x00.kr/development/python/python-uv-simple-usage-and-example
+```bash
+# On macOS and Linux.
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# On Windows.
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# With pip.
+pip install uv
+
+# With pipx.
+pipx install uv
+
+# With Homebrew.
+brew install uv
+
+# With Pacman.
+pacman -S uv
+```
+
+- uv venv
+```bash
+uv venv --python 3.12.0
+
+uv python list
+```
+
+- Create virtualenv and install the library via uv
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -55,6 +87,9 @@ Installed 42 packages in 1.47s
  + h11==0.16.0
  + httpcore==1.0.9
 # --
+
+# The issue is that 'fcntl' is not available on windows
+uv add gunicorn --system-certs
 
 # 그리고 lint를 해주기 위해 ruff 를 추가해주도록 합시다. 개발할 때만 사용하고 배포 시에는 활용하지 않을 것이므로 --dev에 추가해주도록 합시다.
 uv add --dev ruff
