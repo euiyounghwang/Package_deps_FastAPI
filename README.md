@@ -39,6 +39,31 @@ uv venv --python 3.12.0
 uv python list
 ```
 
+- uv help
+```bash
+사용법: uv [옵션] <명령어>
+
+명령어:
+  run      명령어나 스크립트 실행
+  init     새 프로젝트 생성
+  add      프로젝트에 의존성 추가
+  remove   프로젝트에서 의존성 제거
+  sync     프로젝트의 환경 업데이트
+  lock     프로젝트의 락파일 업데이트
+  export   프로젝트의 락파일을 다른 형식으로 내보내기
+  tree     프로젝트의 의존성 트리 표시
+  tool     Python 패키지가 제공하는 명령어 실행 및 설치
+  python   Python 버전 및 설치 관리
+  pip      pip 호환 인터페이스로 Python 패키지 관리
+  venv     가상 환경 생성
+  build    Python 패키지를 소스 배포판 및 휠로 빌드
+  publish  배포판을 인덱스에 업로드
+  cache    uv의 캐시 관리
+  self     uv 실행 파일 관리
+  version  uv 버전 표시
+  help     명령어에 대한 문서 표시
+```
+
 - Create virtualenv and install the library via uv
 ```bash
 python -m venv .venv
@@ -113,6 +138,22 @@ uv run fastapi dev main.py
 
        tip   Running in development mode, for production use: fastapi run
 # --
+
+# -- sample --
+$ uv add fastapi
+$ uv add uvicorn --extra standard
+$ uv add ruff --dev
+$ uv add pytest --group test
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.4",
+]
+test = [
+    "pytest>=8.3.5",
+]
+# -- --
+
 ```
 
 - Installation libraries
@@ -120,8 +161,20 @@ uv run fastapi dev main.py
 
 uv export -o ./dev_uv_requirements.txt
 
+uv pip install -r ./dev_requirements.txt
+
 #export UV_NATIVE_TLS=true
 #uv python install 3.11
+
+# uv is significantly faster than standard venv, often over 6x faster.
+# Create a .venv virtual environment with default Python
+uv venv
+
+# Create a virtual environment with a specific Python version
+uv venv --python 3.11
+
+# Create a virtual environment with a custom name
+uv venv <env_name> --python 3.11
 
 #uv venv test --python 3.11
 #cpython-3.11.15-windows-x86_64-none (download) ------------------------------ 12.67 MiB/24.41 MiB   
@@ -133,5 +186,10 @@ source test/Script/activate
 pip install uv
 time uv add -r dev_uv_requirements.txt --system-certs --active   # 의존성 설치
 
-#uv sync # pyproject.toml 과 uv.lock 파일을 기준으로 가상환경 재생성 및 동기화
+uv sync # pyproject.toml 과 uv.lock 파일을 기준으로 가상환경 재생성 및 동기화
+uv tree
+
 ```
+
+### Run via uv
+- uv run --python 3.10 --with fastapi,pytest main.py (uv run 명령어를 사용하여 설치되지 않은 파이썬 버전을 자동으로 설치하고, 필요한 패키지를 포함시켜 스크립트를 실행할 수 있습니다.)
