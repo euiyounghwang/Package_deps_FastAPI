@@ -1,0 +1,9 @@
+[project]
+name = "package-deps-fastapi"
+version = "0.1.0"
+description = "Package deps with uv on FastAPI"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi[standard]>=0.136.0",
+]
