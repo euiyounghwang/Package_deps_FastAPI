@@ -115,3 +115,23 @@ uv run fastapi dev main.py
 # --
 ```
 
+- Installation libraries
+```bash
+
+uv export -o ./dev_uv_requirements.txt
+
+#export UV_NATIVE_TLS=true
+#uv python install 3.11
+
+#uv venv test --python 3.11
+#cpython-3.11.15-windows-x86_64-none (download) ------------------------------ 12.67 MiB/24.41 MiB   
+
+pip freeze > ./dev_requirements.txt
+
+python -m venv test
+source test/Script/activate
+pip install uv
+time uv add -r dev_uv_requirements.txt --system-certs --active   # 의존성 설치
+
+#uv sync # pyproject.toml 과 uv.lock 파일을 기준으로 가상환경 재생성 및 동기화
+```
