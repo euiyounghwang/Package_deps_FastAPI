@@ -142,7 +142,8 @@ uv run fastapi dev main.py
 # -- sample --
 $ uv add fastapi
 $ uv add uvicorn --extra standard
-$ uv add ruff --dev
+$ uv add ruff --dev --system-certs
+$ uv add --dev pytest pytest-cov --system-certs
 $ uv add pytest --group test
 
 [dependency-groups]
@@ -152,6 +153,10 @@ dev = [
 test = [
     "pytest>=8.3.5",
 ]
+
+# 특정 브랜치나 태그에서 설치
+uv add "git+https://github.com/user/repo.git@main"
+uv add "git+https://github.com/user/repo.git@v1.0.0"
 # -- --
 
 ```
@@ -191,5 +196,57 @@ uv tree
 
 ```
 
+### Pytest via uv
+- uv run pytest ./tests
+- uv run pytest ./tests/test_api.py
+- ./pytest.sh
+```bash
+$ uv run pytest tests/
+======================================================================================================== test session starts ========================================================================================================
+platform win32 -- Python 3.11.14, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\Users\euiyoung.hwang\Git_Workspace\Package_deps_FastAPI\tests
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collected 1 item                                                                                                                                                                                                                     
+
+tests\test_api.py .                                                                                                                                                                                                            [100%]
+
+========================================================================================================= 1 passed in 0.07s =========================================================================================================
+(.venv) 
+```
+- ./pytest.sh with coverage
+```bash
+uv run pytest ./tests -sv ./tests -sv ./tests --disable-warnings --cov-report term-missing --cov
+$ ./pytest.sh
+======================================================================================================== test session starts ========================================================================================================
+platform win32 -- Python 3.11.14, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\euiyoung.hwang\Git_Workspace\Package_deps_FastAPI\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\euiyoung.hwang\Git_Workspace\Package_deps_FastAPI\tests
+configfile: pytest.ini
+plugins: anyio-4.13.0, cov-7.1.0
+collected 1 item                                                                                                                                                                                                                     
+
+tests\test_api.py::test_api PASSED
+
+========================================================================================================== tests coverage ===========================================================================================================
+_________________________________________________________________________________________ coverage: platform win32, python 3.11.14-final-0 __________________________________________________________________________________________
+
+Name                Stmts   Miss  Cover   Missing
+-------------------------------------------------
+main.py                 8      0   100%
+tests\__init__.py       0      0   100%
+tests\conftest.py       8      0   100%
+tests\test_api.py       6      0   100%
+-------------------------------------------------
+TOTAL                  22      0   100%
+========================================================================================================= 1 passed in 0.29s =========================================================================================================
+(.venv) 
+```
+
+
 ### Run via uv
 - uv run --python 3.10 --with fastapi,pytest main.py (uv run 명령어를 사용하여 설치되지 않은 파이썬 버전을 자동으로 설치하고, 필요한 패키지를 포함시켜 스크립트를 실행할 수 있습니다.)
+- uv run ruff check
+```bash
+All checks passed!
+```
