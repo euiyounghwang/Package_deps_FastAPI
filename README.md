@@ -186,14 +186,37 @@ uv venv <env_name> --python 3.11
 
 pip freeze > ./dev_requirements.txt
 
-python -m venv test
-source test/Script/activate
+python -m venv .test_venv
+source .test_venv/Script/activate
 pip install uv
 time uv add -r dev_uv_requirements.txt --system-certs --active   # 의존성 설치
 
+#--
+python -m venv .test_venv
+source .test_venv/Scripts/activate
+pip install uv
 uv sync # pyproject.toml 과 uv.lock 파일을 기준으로 가상환경 재생성 및 동기화
-uv tree
+uv sync --dev --active
+Resolved 53 packages in 3ms
+Installed 50 packages in 1.80s
+ + annotated-doc==0.0.4
+ + annotated-types==0.7.0
+ + anyio==4.13.0
+ + certifi==2026.4.22
+ + click==8.3.3
+ + colorama==0.4.6
+ + coverage==7.13.5
+ + dnspython==2.8.0
+ + email-validator==2.3.0
+ + fastapi==0.136.0
+ + fastapi-cli==0.0.24
+ + fastapi-cloud-cli==0.
+ ..
+ + watchfiles==1.1.1
+ + websockets==16.0
+#--
 
+uv tree
 ```
 
 ### Pytest via uv
