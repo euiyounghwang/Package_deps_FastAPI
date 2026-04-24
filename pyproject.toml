@@ -55,7 +55,10 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "aiohttp-sse-client>=0.2.1",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
+    "requests>=2.33.1",
     "ruff>=0.15.11",
+    "sseclient>=0.0.27",
 ]
