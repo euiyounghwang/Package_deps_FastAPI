@@ -20,6 +20,9 @@ jobs:
   build-tests:
     name: Build and tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
       
@@ -27,7 +30,8 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true # Speeds up subsequent runs
-          python-version: "3.11" # Optional: specify a version
+          #python-version: "3.11" # Optional: specify a version
+          python-version: ${{ matrix.python-version }}
       
       - name: Install dependencies
         run: uv sync --all-extras --dev # Ensures pytest is available
