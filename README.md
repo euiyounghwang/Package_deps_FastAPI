@@ -2,7 +2,6 @@
 <i> Package_deps_FastAPI
 
 FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python.
-This is a repository that provides to deliver the records to the Prometheus-Export application.
 
 UV is an extremely fast Python package and project manager, written in Rust. UV manages project dependencies and environments, with support for lockfiles, workspaces, and more.
 - A single tool to replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more
