@@ -44,8 +44,8 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true # Speeds up subsequent runs
-          #python-version: "3.11" # Optional: specify a version
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.11" # Optional: specify a version
+          # python-version: ${{ matrix.python-version }}
       
       - name: Install dependencies
         run: uv sync --all-extras --dev # Ensures pytest is available
@@ -55,6 +55,8 @@ jobs:
       #   run: uv pip install -r requirements.txt
 
       - name: Run tests
+        env:
+          ELASTICSEARCH_HOST: http://localhost:9200
         run: uv run pytest
 
 
