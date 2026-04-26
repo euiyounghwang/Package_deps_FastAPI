@@ -20,12 +20,31 @@ jobs:
   build-tests:
     name: Build and tests
     runs-on: ubuntu-latest
+    # Elasticsearch Service container
+    services:
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+        env:
+          discovery.type: single-node
+          xpack.security.enabled: "false"
+        ports:
+          - 9200:9200
+        options: >-
+          --health-cmd "curl http://localhost:9200/_cluster/health"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       matrix:
         python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
       
+      - name: Install Plugin
+        run: |
+          docker exec elasticsearch bin/elasticsearch-plugin install --batch analysis-icu
+          docker restart elasticsearch
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -37,6 +56,8 @@ jobs:
         run: uv sync --all-extras --dev # Ensures pytest is available
 
       - name: Run tests
+        env:
+          ELASTICSEARCH_HOST: http://localhost:9200
         run: uv run pytest
 
 
