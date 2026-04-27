@@ -28,7 +28,7 @@ jobs:
           discovery.type: single-node
           xpack.security.enabled: "false"
         ports:
-          - 9200:9200
+          - 9201:9200
         options: >-
           --health-cmd "curl http://localhost:9200/_cluster/health"
           --health-interval 10s
@@ -52,7 +52,7 @@ jobs:
 
       - name: Run tests
         env:
-          ELASTICSEARCH_HOST: http://localhost:9200
+          ELASTICSEARCH_HOST: http://localhost:9201
         run: uv run pytest
 
 
