@@ -18,6 +18,7 @@ on:
 
 env:
   elasticsearch_version: '8.17.0'
+  cluster.name: "docker-elasticsearch"
   elasticsearch_port: 9201
     
 jobs:
@@ -66,7 +67,7 @@ jobs:
       - name: Start Elasticsearch
         uses: elastic/elastic-github-actions/elasticsearch@master
         with:
-          version: ${{ env.elasticsearch_version }}
+          stack-version: ${{ env.elasticsearch_version }}
           # Recommended: Use specific port
           port: ${{ env.elasticsearch_version }} 
 
