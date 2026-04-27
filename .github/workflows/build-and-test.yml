@@ -52,19 +52,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # - name: Configure sysctl limits
-      #   run: |
-      #     sudo swapoff -a
-      #     sudo sysctl -w vm.swappiness=1
-      #     sudo sysctl -w fs.file-max=262144
-      #     sudo sysctl -w vm.max_map_count=262144
+      - name: Configure sysctl limits
+        run: |
+          sudo swapoff -a
+          sudo sysctl -w vm.swappiness=1
+          sudo sysctl -w fs.file-max=262144
+          sudo sysctl -w vm.max_map_count=262144
 
-      # - uses: miyataka/elasticsearch-github-actions@1
-      #   with:
-      #     stack-version: ${{ env.elasticsearch_version }}
-      #     plugins: 'analysis-kuromoji analysis-icu'
-
-      - name: Start Elasticsearch
+      - name: Start Elasticsearch with Plugins
         uses: elastic/elastic-github-actions/elasticsearch@master
         with:
           stack-version: ${{ env.elasticsearch_version }}
