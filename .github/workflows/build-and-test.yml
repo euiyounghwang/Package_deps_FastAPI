@@ -70,7 +70,10 @@ jobs:
           stack-version: ${{ env.elasticsearch_version }}
           security-enabled: false
           # Recommended: Use specific port
-          port: ${{ env.elasticsearch_port }} 
+          port: ${{ env.elasticsearch_port }}
+          plugins: |
+            analysis-icu
+            analysis-kuromoji 
 
       - name: Verify Elasticsearch connection
         run: curl -f http://localhost:${{ env.elasticsearch_port }}
