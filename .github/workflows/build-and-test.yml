@@ -55,6 +55,9 @@ jobs:
       #     stack-version: ${{ env.elasticsearch_version }}
       #     plugins: 'analysis-kuromoji analysis-icu'
 
+      - name: Verify Elasticsearch connection
+        run: curl -f http://localhost:${{ env.elasticsearch_version }}
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -67,7 +70,7 @@ jobs:
 
       - name: Run tests
         env:
-          ELASTICSEARCH_HOST: http://localhost:9201
+          ELASTICSEARCH_HOST: http://localhost:${{ env.elasticsearch_version }}
         run: uv run pytest
 
 
