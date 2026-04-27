@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       elasticsearch_version: '8.17.0'
+      elasticsearch_port: 9201
     # Elasticsearch Service container
     services:
       elasticsearch:
@@ -56,7 +57,7 @@ jobs:
       #     plugins: 'analysis-kuromoji analysis-icu'
 
       - name: Verify Elasticsearch connection
-        run: curl -f http://localhost:${{ env.elasticsearch_version }}
+        run: curl -f http://localhost:${{ env.elasticsearch_port }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -70,7 +71,7 @@ jobs:
 
       - name: Run tests
         env:
-          ELASTICSEARCH_HOST: http://localhost:${{ env.elasticsearch_version }}
+          ELASTICSEARCH_HOST: http://localhost:${{ env.elasticsearch_port }}
         run: uv run pytest
 
 
