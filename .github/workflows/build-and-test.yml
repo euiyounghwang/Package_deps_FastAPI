@@ -20,10 +20,13 @@ jobs:
   build-tests:
     name: Build and tests
     runs-on: ubuntu-latest
+    env:
+      elasticsearch_version: '8.17.0'
     # Elasticsearch Service container
     services:
       elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+        # image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+        image: docker.elastic.co/elasticsearch/elasticsearch:${{ env.elasticsearch_version }}
         env:
           discovery.type: single-node
           xpack.security.enabled: "false"
@@ -40,6 +43,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Configure sysctl limits
+        run: |
+          sudo swapoff -a
+          sudo sysctl -w vm.swappiness=1
+          sudo sysctl -w fs.file-max=262144
+          sudo sysctl -w vm.max_map_count=262144
+
+      - uses: miyataka/elasticsearch-github-actions@1
+        with:
+          stack-version: ${{ env.elasticsearch_version }}
+          plugins: 'analysis-kuromoji analysis-icu'
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
