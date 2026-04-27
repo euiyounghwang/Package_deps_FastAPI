@@ -69,7 +69,7 @@ jobs:
         with:
           stack-version: ${{ env.elasticsearch_version }}
           # Recommended: Use specific port
-          port: ${{ env.elasticsearch_version }} 
+          port: ${{ env.elasticsearch_port }} 
 
       - name: Verify Elasticsearch connection
         run: curl -f http://localhost:${{ env.elasticsearch_port }}
