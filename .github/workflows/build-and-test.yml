@@ -14,20 +14,26 @@ on:
     branches: [dev, master, feature/*, release/*]
   pull_request:
     branches: ['*']
-    
+
+
+env:
+  elasticsearch_version: '8.17.0'
+  elasticsearch_port: 9201
     
 jobs:
   build-tests:
     name: Build and tests
     runs-on: ubuntu-latest
-    env:
-      elasticsearch_version: '8.17.0'
-      elasticsearch_port: 9201
+    
+    # env:
+    #   elasticsearch_version: '8.17.0'
+    #   elasticsearch_port: 9201
+
     # Elasticsearch Service container
     services:
       elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
-        # image: docker.elastic.co/elasticsearch/elasticsearch:${{ env.elasticsearch_version }}
+        # image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+        image: docker.elastic.co/elasticsearch/elasticsearch:${{ env.elasticsearch_version }}
         env:
           cluster.name: docker-elasticsearch
           discovery.type: single-node
