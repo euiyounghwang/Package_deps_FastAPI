@@ -68,6 +68,7 @@ jobs:
         uses: elastic/elastic-github-actions/elasticsearch@master
         with:
           stack-version: ${{ env.elasticsearch_version }}
+          security-enabled: false
           # Recommended: Use specific port
           port: ${{ env.elasticsearch_port }} 
 
