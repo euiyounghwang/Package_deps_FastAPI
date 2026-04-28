@@ -8,6 +8,7 @@ UV is an extremely fast Python package and project manager, written in Rust. UV 
 - 10-100x faster than pip.
 - Installs and manages Python versions.
 
+Create new Dev PR for testing
 
 ### Using Uv: Create the virtual environment in the same directory as the project and install the dependencies:
 - uv installation : https://www.0x00.kr/development/python/python-uv-simple-usage-and-example
