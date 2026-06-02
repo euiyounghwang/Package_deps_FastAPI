@@ -6,14 +6,28 @@ import time
 from injector import logger
 from contextlib import asynccontextmanager
 
+
+# 1. Define global variable for your index and model
+faiss_index = None
+FAISS_INDEX_PATH = "models/my_faiss_index.bin"
+
 # 2. Define lifespan event to handle startup and shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    ''' 
+    To load a FAISS index and an embedding model efficiently in FastAPI, 
+    you should use FastAPI's lifespan event handler to load them into memory exactly once when the server starts. 
+    This prevents the severe performance penalty of re-loading the models on every single API request.
+    '''
     # Load the embedding model and FAISS index on startup
+    ''' To reload a FAISS model (or vector index) in FastAPI without restarting the server, create a dedicated endpoint that triggers a reload function. This function reloads the FAISS index into a global variable or shared'''
+    global faiss_index
     try:
         # print("Loading ML models and FAISS index...")
         # ml_models["encoder"] = SentenceTransformer("all-MiniLM-L6-v2")
         # ml_models["faiss_index"] = faiss.read_index("my_vector_store.index")
+
+        # faiss_index = faiss.read_index(FAISS_INDEX_PATH)
         logger.info(f"startup eventing..")
     except Exception as e:
         print(f"Error loading models: {e}")
