@@ -3,6 +3,32 @@ from starlette.middleware.cors import CORSMiddleware
 import asyncio
 from fastapi.responses import StreamingResponse
 import time
+from injector import logger
+from contextlib import asynccontextmanager
+
+# 2. Define lifespan event to handle startup and shutdown
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Load the embedding model and FAISS index on startup
+    try:
+        # print("Loading ML models and FAISS index...")
+        # ml_models["encoder"] = SentenceTransformer("all-MiniLM-L6-v2")
+        # ml_models["faiss_index"] = faiss.read_index("my_vector_store.index")
+        logger.info(f"startup eventing..")
+    except Exception as e:
+        print(f"Error loading models: {e}")
+        raise RuntimeError("Startup failed: Models could not be loaded.")
+        
+    yield
+    # Clean up on shutdown
+    # ml_models.clear()
+    logger.info(f"shutdown..")
+
+
+# @app.on_event("startup")
+# def startup_event():
+#     logger.info(f"startup eventing..")
+
 
 # app = FastAPI()
 
@@ -11,6 +37,7 @@ app = FastAPI(
     description="ES Package Deps Service",
     version="0.0.1",
     # terms_of_service="http://example.com/terms/",
+    lifespan=lifespan
 )
 
 

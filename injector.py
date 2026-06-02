@@ -3,7 +3,19 @@ from elasticsearch import Elasticsearch
 from dotenv import load_dotenv
 import yaml
 import json
-import os
+import os, sys
+import logging
+
+# 로깅 설정
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+logger = logging.getLogger("FastAPI_Deps_REST_API")
 
 
 def get_headers():
