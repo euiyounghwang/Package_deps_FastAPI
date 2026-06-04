@@ -118,6 +118,15 @@ uv add gunicorn --system-certs
 # 그리고 lint를 해주기 위해 ruff 를 추가해주도록 합시다. 개발할 때만 사용하고 배포 시에는 활용하지 않을 것이므로 --dev에 추가해주도록 합시다.
 uv add --dev ruff
 
+# 코드 스타일 검사
+uv run ruff check .
+
+# 오류 자동 수정
+uv run ruff check . --fix
+
+# Code Formatting
+uv run ruff format .
+
 uv run fastapi dev main.py
 # --
   FastAPI   Starting development server 🚀

@@ -25,3 +25,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 ENV PATH="/app/.venv/bin:$PATH"
 
 CMD ["python", "main.py"]
+
+# Use uv run to execute your production WSGI/ASGI application
+# CMD ["uv", "run", "gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "main:app"]
