@@ -3,3 +3,4 @@ __pycache__/
 .test_venv/
 .ruff_cache/
 tests/.pytest_cache/
+.jupyter_venv/
